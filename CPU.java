@@ -11,4 +11,8 @@ package simulador_escalonador;
 
 public class CPU {
     
+    public void runProcess(){
+
+    }
+
 }

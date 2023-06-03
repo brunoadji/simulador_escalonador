@@ -17,4 +17,36 @@ package simulador_escalonador;
 
 public class ProcessListGroup {
     
+
+    void insertP0(){
+
+    }
+
+    void insertQ1(){
+        
+    }
+
+    void insertQ2(){
+        
+    }
+
+    void insertQ3(){
+        
+    }
+
+    /*Process getFromP0(){
+
+    }
+
+    Process getFromQ1(){
+        
+    }
+
+    Process getFromQ2(){
+        
+    }
+
+    Process getFromQ3(){
+        
+    }*/
 }

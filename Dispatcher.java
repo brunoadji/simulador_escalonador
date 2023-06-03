@@ -6,6 +6,9 @@ package simulador_escalonador;
  * 
  */
 
-public class Dispacher {
+public class Dispatcher {
     
+    public void dispatch(){
+
+    }
 }

@@ -5,4 +5,8 @@ package simulador_escalonador;
 
 public class LTScheduler {
     
+    
+    public void accept(){
+
+    }
 }
