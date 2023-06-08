@@ -10,7 +10,8 @@ package simulador_escalonador;
 */  
 
 public class CPU {
-    
+    Process actualProcess;
+
     public void runProcess(){
 
     }
