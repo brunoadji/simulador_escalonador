@@ -23,7 +23,6 @@ public class ProcessListGroup {
 
     }
 
-
     //Filas de prioridade 1
     void insertQ0(){
         
