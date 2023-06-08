@@ -18,8 +18,15 @@ package simulador_escalonador;
 public class ProcessListGroup {
     
 
+    //Inserindo na fila de prioridade 0
     void insertP0(){
 
+    }
+
+
+    //Filas de prioridade 1
+    void insertQ0(){
+        
     }
 
     void insertQ1(){
@@ -27,10 +34,6 @@ public class ProcessListGroup {
     }
 
     void insertQ2(){
-        
-    }
-
-    void insertQ3(){
         
     }
 
