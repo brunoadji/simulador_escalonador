@@ -51,6 +51,10 @@ public class ProcessListGroup {
     }
 
     Process getFromP0(){
+
+    }
+
+    Process getFromQ0(){
         
     }
 
@@ -59,10 +63,6 @@ public class ProcessListGroup {
     }
 
     Process getFromQ2(){
-        
-    }
-
-    Process getFromQ3(){
         
     }
 }
