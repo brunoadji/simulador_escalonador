@@ -1,4 +1,6 @@
 package simulador_escalonador;
+import java.util.LinkedList;
+import java.util.Queue;
 
 /*   Essa classe possui as 5 filas de processos
  *   Ela fornece métodos para inserir processos na fila e retirar processos da fila
@@ -16,28 +18,40 @@ package simulador_escalonador;
  */
 
 public class ProcessListGroup {
+    private Queue<Process> p0;
+    private Queue<Process> q0;
+    private Queue<Process> q1;
+    private Queue<Process> q2;
+    private Queue<Process> block;
     
+    public ProcessListGroup() {
+        p0 = new LinkedList();
+        q0 = new LinkedList();
+        q1 = new LinkedList();
+        q2 = new LinkedList();
+        block = new LinkedList();
+    }
 
     //Inserindo na fila de prioridade 0
-    void insertP0(){
-
+    void insertP0(Process p){
+        p0.add(p);
     }
 
     //Filas de prioridade 1
-    void insertQ0(){
-        
+    void insertQ0(Process p){
+        q0.add(p);
     }
 
-    void insertQ1(){
-        
+    void insertQ1(Process p){
+        q1.add(p);
     }
 
-    void insertQ2(){
-        
+    void insertQ2(Process p){
+        q2.add(p);
     }
 
-    /*Process getFromP0(){
-
+    Process getFromP0(){
+        
     }
 
     Process getFromQ1(){
@@ -50,5 +64,5 @@ public class ProcessListGroup {
 
     Process getFromQ3(){
         
-    }*/
+    }
 }
