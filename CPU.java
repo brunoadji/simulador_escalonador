@@ -10,9 +10,61 @@ package simulador_escalonador;
 */  
 
 public class CPU {
-    
-    public void runProcess(){
 
+    private Process process = null;
+
+    private ProcessListGroup queueManager;
+
+    private int remainingQuantum = 2;
+
+    public CPU(ProcessListGroup group){
+        queueManager = group;
+    }
+
+    public boolean isFree(){
+        return (process==null);
+    }
+    
+    public void setProcess(Process process) {
+        this.process = process;
+        remainingQuantum = 2;
+    }
+    
+    public void runProcess(Process p){
+        if(process == null) return;
+
+        int state = process.execute();
+
+        remainingQuantum--;
+
+        if(state == Process.END){
+            process = null;
+            return;
+        }
+        else if(state == Process.BLOCK){
+            //insertBlock
+        }else if(remainingQuantum==0){
+            reinsert();
+        }
+    }
+
+    public void reinsert(){
+        if(process.getPriority()==0){
+            queueManager.insertP0(process);
+        }else{
+            switch(process.getQueueIndex()){
+                case 0:
+                    queueManager.insertQ0(process);
+                    break;
+                case 1:
+                    queueManager.insertQ1(process);
+                    break;
+                case 2:
+                    queueManager.insertQ2(process);
+            }
+        }
+
+        process = null;
     }
 
 }
