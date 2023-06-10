@@ -22,14 +22,20 @@ public class ProcessListGroup {
     private Queue<Process> q0;
     private Queue<Process> q1;
     private Queue<Process> q2;
-    private Queue<Process> block;
+    private Queue<Process> block0;
+    private Queue<Process> block1;
+    private Queue<Process> block2;
+    private Queue<Process> block3;
     
     public ProcessListGroup() {
         p0 = new LinkedList();
         q0 = new LinkedList();
         q1 = new LinkedList();
         q2 = new LinkedList();
-        block = new LinkedList();
+        block0 = new LinkedList();
+        block1 = new LinkedList();
+        block2 = new LinkedList();
+        block3 = new LinkedList();
     }
 
     //Inserindo na fila de prioridade 0
