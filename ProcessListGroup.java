@@ -2,7 +2,9 @@ package simulador_escalonador;
 import java.util.LinkedList;
 import java.util.Queue;
 
-/*   Essa classe possui as 5 filas de processos
+/*   Essa classe possui as 8 filas de processos
+ *   As filas de processo são divididas em: 3 de Feedback, 1 de FCFS e 4 de Bloqueados, 1 para cada disco.
+ *
  *   Ela fornece métodos para inserir processos na fila e retirar processos da fila
  * 
  *   Atenção, é uma fila e não uma lista
@@ -18,57 +20,43 @@ import java.util.Queue;
  */
 
 public class ProcessListGroup {
-    private Queue<Process> p0;
-    private Queue<Process> q0;
-    private Queue<Process> q1;
-    private Queue<Process> q2;
-    private Queue<Process> block0;
-    private Queue<Process> block1;
-    private Queue<Process> block2;
-    private Queue<Process> block3;
+    private int amountFeedbackQueues = 3;
+    private int amountBlockQueues = 4;
+
+    private Queue<Process> priorityQueue;
+
+    private Queue<Process>[] feedbackQueue;
+    private Queue<Process>[] blockQueue;
     
     public ProcessListGroup() {
-        p0 = new LinkedList();
-        q0 = new LinkedList();
-        q1 = new LinkedList();
-        q2 = new LinkedList();
-        block0 = new LinkedList();
-        block1 = new LinkedList();
-        block2 = new LinkedList();
-        block3 = new LinkedList();
+        priorityQueue = new LinkedList<Process>();
+
+        feedbackQueue = new LinkedList[amountFeedbackQueues];
+        blockQueue = new LinkedList[amountBlockQueues];
+
+        for(int i = 0; i < amountFeedbackQueues; i++) {
+            feedbackQueue[i] = new LinkedList<Process>();
+        }
+
+        for(int i = 0; i < amountBlockQueues; i++) {
+            blockQueue[i] = new LinkedList<Process>();
+        }
     }
 
     //Inserindo na fila de prioridade 0
-    void insertP0(Process p){
-        p0.add(p);
+    void insertPriorityQueue(Process p){
+        priorityQueue.add(p);
     }
 
-    //Filas de prioridade 1
-    void insertQ0(Process p){
-        q0.add(p);
+    void insertFeedback(Process p, int index) {
+        feedbackQueue[index].add(p);
     }
 
-    void insertQ1(Process p){
-        q1.add(p);
-    }
-
-    void insertQ2(Process p){
-        q2.add(p);
-    }
-
-    Process getFromP0(){
+    Process getFromPriorityQueue(){
 
     }
 
-    Process getFromQ0(){
-        
-    }
-
-    Process getFromQ1(){
-        
-    }
-
-    Process getFromQ2(){
+    Process getFromFeedbackQueue(){
         
     }
 }
