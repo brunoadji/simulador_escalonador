@@ -50,21 +50,11 @@ public class CPU {
 
     public void reinsert(){
         if(process.getPriority()==0){
-            queueManager.insertP0(process);
+            queueManager.insertPriorityQueue(process);
         }else{
-            switch(process.getQueueIndex()){
-                case 0:
-                    queueManager.insertQ0(process);
-                    break;
-                case 1:
-                    queueManager.insertQ1(process);
-                    break;
-                case 2:
-                    queueManager.insertQ2(process);
-            }
+            queueManager.insertFeedback(process, process.getQueueIndex());
         }
 
         process = null;
     }
-
 }
