@@ -48,22 +48,27 @@ public class ProcessListGroup {
         priorityQueue.add(p);
     }
 
+    //Inserindo na fila index de prioridade 1
     void insertFeedback(Process p, int index) {
         feedbackQueue[index].add(p);
     }
 
+    //Inserindo na fila de bloqueados para o disco index
     void insertBlock(Process p, int index) {
         blockQueue[index].add(p);
     }
 
+    //Remove e retorna da fila de prioridade 0
     Process getFromPriorityQueue() {
         return priorityQueue.remove();
     }
 
+    //Remove e retorna da fila index de prioridade 1
     Process getFromFeedbackQueue(int index) {
         return feedbackQueue[index].remove();
     }
 
+    //Remove e retorna da fila de bloqueado do disco index
     Process getFromBlockQueue(int index) {
         return blockQueue[index].remove();
     }
