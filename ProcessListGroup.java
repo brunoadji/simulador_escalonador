@@ -44,7 +44,7 @@ public class ProcessListGroup {
     }
 
     //Inserindo na fila de prioridade 0
-    void insertPriorityQueue(Process p){
+    void insertPriorityQueue(Process p) {
         priorityQueue.add(p);
     }
 
@@ -52,11 +52,19 @@ public class ProcessListGroup {
         feedbackQueue[index].add(p);
     }
 
-    Process getFromPriorityQueue(){
-
+    void insertBlock(Process p, int index) {
+        blockQueue[index].add(p);
     }
 
-    Process getFromFeedbackQueue(){
-        
+    Process getFromPriorityQueue() {
+        return priorityQueue.remove();
+    }
+
+    Process getFromFeedbackQueue(int index) {
+        return feedbackQueue[index].remove();
+    }
+
+    Process getFromBlockQueue(int index) {
+        return blockQueue[index].remove();
     }
 }
