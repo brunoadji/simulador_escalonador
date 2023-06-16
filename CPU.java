@@ -43,7 +43,7 @@ public class CPU {
             return;
         }
         else if(state == Process.BLOCK){
-            //insertBlock
+            queueManager.insertBlock(p, p.getDiskIndex());
         }else if(remainingQuantum==0){
             reinsert();
         }
