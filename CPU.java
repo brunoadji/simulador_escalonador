@@ -35,7 +35,8 @@ public class CPU {
 
         int state = process.execute();
 
-        remainingQuantum--;
+        if(process.getPriority()==1)
+            remainingQuantum--;
 
         if(state == Process.END){
             process = null;
