@@ -60,16 +60,16 @@ public class ProcessListGroup {
 
     //Remove e retorna da fila de prioridade 0
     Process getFromPriorityQueue() {
-        return priorityQueue.remove();
+        return priorityQueue.poll();
     }
 
     //Remove e retorna da fila index de prioridade 1
     Process getFromFeedbackQueue(int index) {
-        return feedbackQueue[index].remove();
+        return feedbackQueue[index].poll();
     }
 
     //Remove e retorna da fila de bloqueado do disco index
     Process getFromBlockQueue(int index) {
-        return blockQueue[index].remove();
+        return blockQueue[index].poll();
     }
 }
