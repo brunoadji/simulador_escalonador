@@ -5,8 +5,16 @@ package simulador_escalonador;
 
 public class LTScheduler {
     
-    
-    public void accept(){
+    private ProcessListGroup queue;
 
+    public LTScheduler(ProcessListGroup q){
+        queue = q;
+    }
+
+    public void accept(Process p){
+        if(p.getPriority() == 0)
+            queue.insertPriorityQueue(p);
+        else
+            queue.insertFeedback(p, 0);
     }
 }
