@@ -11,7 +11,9 @@ public class LTScheduler {
         queue = q;
     }
 
-    public void accept(Process p){
+    public void accept(ProcessOS p){
+        System.out.println("entrou"+p.getPriority());
+
         if(p.getPriority() == 0)
             queue.insertPriorityQueue(p);
         else

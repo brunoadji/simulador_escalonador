@@ -17,7 +17,7 @@ public class Dispatcher {
     }
 
     public void dispatch(){
-        Process p;
+        ProcessOS p;
 
         p = queue.getFromPriorityQueue();
 

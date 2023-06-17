@@ -23,53 +23,82 @@ public class ProcessListGroup {
     private int amountFeedbackQueues = 3;
     private int amountBlockQueues = 4;
 
-    private Queue<Process> priorityQueue;
+    private Queue<ProcessOS> priorityQueue;
 
-    private Queue<Process>[] feedbackQueue;
-    private Queue<Process>[] blockQueue;
+    private Queue<ProcessOS>[] feedbackQueue;
+    private Queue<ProcessOS>[] blockQueue;
     
     public ProcessListGroup() {
-        priorityQueue = new LinkedList<Process>();
-
+        priorityQueue = new LinkedList<ProcessOS>();
+        
         feedbackQueue = new LinkedList[amountFeedbackQueues];
         blockQueue = new LinkedList[amountBlockQueues];
 
         for(int i = 0; i < amountFeedbackQueues; i++) {
-            feedbackQueue[i] = new LinkedList<Process>();
+            feedbackQueue[i] = new LinkedList<ProcessOS>();
         }
 
         for(int i = 0; i < amountBlockQueues; i++) {
-            blockQueue[i] = new LinkedList<Process>();
+            blockQueue[i] = new LinkedList<ProcessOS>();
         }
     }
 
     //Inserindo na fila de prioridade 0
-    void insertPriorityQueue(Process p) {
+    void insertPriorityQueue(ProcessOS p) {
         priorityQueue.add(p);
     }
 
     //Inserindo na fila index de prioridade 1
-    void insertFeedback(Process p, int index) {
+    void insertFeedback(ProcessOS p, int index) {
         feedbackQueue[index].add(p);
     }
 
     //Inserindo na fila de bloqueados para o disco index
-    void insertBlock(Process p, int index) {
+    void insertBlock(ProcessOS p, int index) {
         blockQueue[index].add(p);
     }
 
     //Remove e retorna da fila de prioridade 0
-    Process getFromPriorityQueue() {
+    ProcessOS getFromPriorityQueue() {
         return priorityQueue.poll();
     }
 
     //Remove e retorna da fila index de prioridade 1
-    Process getFromFeedbackQueue(int index) {
+    ProcessOS getFromFeedbackQueue(int index) {
         return feedbackQueue[index].poll();
     }
 
     //Remove e retorna da fila de bloqueado do disco index
-    Process getFromBlockQueue(int index) {
+    ProcessOS getFromBlockQueue(int index) {
         return blockQueue[index].poll();
+    }
+
+    public void print(){
+        System.out.println("Priority queue: "+priorityQueue.size());
+
+        for (ProcessOS process : priorityQueue) {
+            process.print();
+        }
+
+        int i = 0;
+
+        for (Queue<ProcessOS> queue : feedbackQueue) {
+            System.out.println("feedback queue "+i+": ");
+            i++;
+
+            for (ProcessOS process : queue) {
+                process.print();
+            }
+        }
+
+        i = 0;
+        
+        for (Queue<ProcessOS> queue : blockQueue) {
+            System.out.println("blocked queue "+i+": ");
+            i++;
+            for (ProcessOS process : queue) {
+                process.print();
+            }
+        }
     }
 }

@@ -4,13 +4,14 @@ package simulador_escalonador;
  *   Tem que ter uma função executar, que decrementa o numero de linhas restante
  */
 
-public class Process {
+public class ProcessOS {
     public static final int END = 0;
     public static final int READY = 1;
     public static final int BLOCK = 2;
 
-    private int state = Process.READY;
+    private int state = ProcessOS.READY;
 
+    private String ID;
     private int commingTime;
     private int priority;
     private int cpuTime;
@@ -23,10 +24,11 @@ public class Process {
 
     private int executedTime;
 
-    public Process(
-        int commingTime, int priority, int cpuTime, 
+    public ProcessOS(
+        String ID, int commingTime, int priority, int cpuTime, 
         int byteLength, int diskIndex, int IOstart, int IOend)
     {
+        this.ID = ID;
         this.commingTime = commingTime;
         this.priority = priority;
         this.cpuTime = cpuTime;
@@ -48,8 +50,12 @@ public class Process {
         return queueIndex;
     }
 
+    public int getIOend() {
+        return IOend;
+    }
+
     public void free(){
-        state = Process.READY;
+        state = ProcessOS.READY;
     }
 
     public void incrementQueueIndex(){
@@ -59,16 +65,20 @@ public class Process {
 
     // retorna end, block ou ready
     public int execute(){
-        if(state == Process.BLOCK)
+        if(state == ProcessOS.BLOCK)
             return state;
 
         executedTime++;
 
         if(cpuTime-executedTime <= 0)
-            state = Process.END;
+            state = ProcessOS.END;
         else if(commingTime+executedTime == IOstart)
-            state = Process.BLOCK;
+            state = ProcessOS.BLOCK;
 
         return state;
+    }
+
+    public void print(){
+        System.out.println(ID);
     }
 }
