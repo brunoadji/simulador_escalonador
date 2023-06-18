@@ -11,7 +11,7 @@ package simulador_escalonador;
 
 public class CPU {
 
-    private Process process = null;
+    private ProcessOS process = null;
 
     private ProcessListGroup queueManager;
 
@@ -25,24 +25,25 @@ public class CPU {
         return (process==null);
     }
     
-    public void setProcess(Process process) {
+    public void setProcess(ProcessOS process) {
         this.process = process;
         remainingQuantum = 2;
     }
     
-    public void runProcess(Process p){
+    public void runProcess(){
         if(process == null) return;
 
         int state = process.execute();
 
-        remainingQuantum--;
+        if(process.getPriority()==1)
+            remainingQuantum--;
 
-        if(state == Process.END){
+        if(state == ProcessOS.END){
             process = null;
             return;
         }
-        else if(state == Process.BLOCK){
-            //insertBlock
+        else if(state == ProcessOS.BLOCK){
+            queueManager.insertBlock(process, process.getDiskIndex());
         }else if(remainingQuantum==0){
             reinsert();
         }
@@ -50,21 +51,17 @@ public class CPU {
 
     public void reinsert(){
         if(process.getPriority()==0){
-            queueManager.insertP0(process);
+            queueManager.insertPriorityQueue(process);
         }else{
-            switch(process.getQueueIndex()){
-                case 0:
-                    queueManager.insertQ0(process);
-                    break;
-                case 1:
-                    queueManager.insertQ1(process);
-                    break;
-                case 2:
-                    queueManager.insertQ2(process);
-            }
+            queueManager.insertFeedback(process, process.getQueueIndex());
         }
 
         process = null;
     }
 
+    public void print(){
+        System.out.println("CPU print:");
+        process.print();
+        System.out.println("remaining quantum: ");
+    }
 }
