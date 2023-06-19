@@ -1,6 +1,8 @@
 package simulador_escalonador;
 
-public class Page {
+import java.awt.Graphics;
+
+public class Page implements Drawnable{
     private ProcessOS process;
     private Frame frame;
 
@@ -24,5 +26,12 @@ public class Page {
     public void clean() {
         this.frame.freeFrame();
         this.process = null;
+    }
+
+    @Override
+    public void draw(Graphics g){}
+
+    public void draw(Graphics g, int x, int y) {
+        g.drawString(process.getID(), x,y);
     }
 }

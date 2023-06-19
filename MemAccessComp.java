@@ -1,11 +1,14 @@
 package simulador_escalonador;
 
-public class MemAccessComp {
+import java.awt.Color;
+import java.awt.Graphics;
+
+public class MemAccessComp implements Drawnable{
     
     private ProcessListGroup queues;
     private int diskIndex;
 
-    private ProcessOS currentProcess;
+    private ProcessOS currentProcess = null;
 
     private int count = 0;
 
@@ -24,10 +27,14 @@ public class MemAccessComp {
 
         count++;
 
-        if(currentProcess.getIOend() <= count){
-            queues.insertFeedback(currentProcess, 0);
+        System.out.println(count+"bloqueou");
 
+        if(currentProcess.getIOduration() <= count){
+            currentProcess.free();
+            queues.insertFeedback(currentProcess, 0);
+            System.out.println(currentProcess.getPriority()+"");
             currentProcess = null;
+            count = 0;
         }
     }
     
@@ -36,4 +43,17 @@ public class MemAccessComp {
         if(currentProcess != null)
             currentProcess.print();
     }
+
+    @Override
+    public void draw(Graphics g) {
+
+    }
+
+    public void draw(Graphics g, int x) {
+        g.setColor(Color.BLACK);
+        g.drawString("Disk acess "+diskIndex, 10+x, 60*10);
+        if(currentProcess != null)
+            currentProcess.draw(g,10+x, 60*10);
+    }
+
 }

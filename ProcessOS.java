@@ -2,11 +2,14 @@ package simulador_escalonador;
 
 import java.lang.Math;
 
+import java.awt.Color;
+import java.awt.Graphics;
+
 /*   Essa classe modela o processo
  *   Tem que ter uma função executar, que decrementa o numero de linhas restante
  */
 
-public class ProcessOS {
+public class ProcessOS implements Drawnable{
     public static final int END = 0;
     public static final int READY = 1;
     public static final int BLOCK = 2;
@@ -20,18 +23,18 @@ public class ProcessOS {
     private int byteLength;
     private int diskIndex;
     private int IOstart;
-    private int IOend;
+    private int IOduration;
 
     private int queueIndex = 0;
 
-    private int executedTime;
+    private int executedTime = 0;
     
     private Page[] pages;
     private int amountPages;
 
     public ProcessOS(
         String ID, int commingTime, int priority, int cpuTime, 
-        int byteLength, int diskIndex, int IOstart, int IOend)
+        int byteLength, int diskIndex, int IOstart, int IOduration)
     {
         this.ID = ID;
         this.commingTime = commingTime;
@@ -40,7 +43,7 @@ public class ProcessOS {
         this.byteLength = byteLength;
         this.diskIndex = diskIndex;
         this.IOstart = IOstart;
-        this.IOend = IOend;
+        this.IOduration = IOduration;
         this.pages = null;
         this.amountPages = 0;
     }
@@ -54,11 +57,14 @@ public class ProcessOS {
     }
 
     public int getQueueIndex() {
-        return queueIndex;
+        int aux = queueIndex;
+        queueIndex++;
+        queueIndex %= 3;
+        return aux;
     }
 
-    public int getIOend() {
-        return IOend;
+    public int getIOduration() {
+        return IOduration;
     }
 
     public Page[] getPages(int frameSize) {
@@ -86,14 +92,22 @@ public class ProcessOS {
         this.amountPages = (int) Math.ceil( (double) this.byteLength/frameSize);
     }
 
+    public int getExecutedTime() {
+        return executedTime;
+    }
+
+    public String getID() {
+        return ID;
+    }
+
     public void free(){
         state = ProcessOS.READY;
     }
 
-    public void incrementQueueIndex(){
+    /*public void incrementQueueIndex(){
         queueIndex++;
         queueIndex%=3;
-    }
+    }*/
 
     // retorna end, block ou ready
     public int execute(){
@@ -106,8 +120,10 @@ public class ProcessOS {
             state = ProcessOS.END;
             this.freeMemory();
         }
-        else if(commingTime+executedTime == IOstart)
+        else if(executedTime == IOstart){
             state = ProcessOS.BLOCK;
+            executedTime++;
+        }
 
         return state;
     }
@@ -122,4 +138,21 @@ public class ProcessOS {
             this.pages[i] = null;
         }
     }
+
+    @Override
+    public void draw(Graphics g) {
+
+    }
+
+    public void draw(Graphics g, int x, int y) {
+        int radius = 25;
+
+        g.setColor(Color.blue);
+        g.fillOval(x, y, 2*radius, 2*radius);
+        
+        g.setColor(Color.black);
+        g.drawString(ID, x+radius, y+radius);
+    }
+
+
 }

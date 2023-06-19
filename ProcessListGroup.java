@@ -1,4 +1,6 @@
 package simulador_escalonador;
+import java.awt.Color;
+import java.awt.Graphics;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -19,7 +21,7 @@ import java.util.Queue;
  * 
  */
 
-public class ProcessListGroup {
+public class ProcessListGroup implements Drawnable{
     private int amountFeedbackQueues = 3;
     private int amountBlockQueues = 4;
 
@@ -101,4 +103,53 @@ public class ProcessListGroup {
             }
         }
     }
+
+    @Override
+    public void draw(Graphics g) {
+        int x = 10, y = 30;
+        double limit = Main.WIDTH*0.6;
+
+        g.setColor(Color.BLACK);
+        g.drawString("Prioridade 0", x, y-10);
+
+        for (ProcessOS processOS : priorityQueue) {
+                processOS.draw(g, x, y);
+                x+=60;
+                if(x>limit) break;
+        }
+
+        y+=70;
+        int i = 0;
+        x = 10;
+
+        for (Queue<ProcessOS> queue : feedbackQueue) {
+            g.setColor(Color.black);
+            g.drawString("Feedback Q"+i, 10, y-10);
+            for (ProcessOS processOS : queue) {
+                processOS.draw(g, x, y);
+                x+=60;
+                if(x>limit) break;
+            }
+            i++;
+            y+=70;
+            x = 10;
+        }
+        x = 10;
+
+        i = 0;
+        for (Queue<ProcessOS> queue : blockQueue) {
+            g.setColor(Color.black);
+            g.drawString("Blocked Q"+i, 10, y-10);
+            for (ProcessOS processOS : queue) {
+                processOS.draw(g, x, y);
+                x+=60;
+                if(x>limit) break;
+            }
+            i++;
+            y+=70;
+            x = 10;
+        }
+    }
+
+    
 }

@@ -1,6 +1,9 @@
 package simulador_escalonador;
+import java.awt.Graphics;
+import java.lang.Math;
+import java.awt.Color;
 
-public class Memory {
+public class Memory implements Drawnable{
     private int capacity;
     private int frameSize;
     private int framesAmount;
@@ -50,5 +53,18 @@ public class Memory {
             if(!this.frames[i].havePage()) amount++;
         }
         return amount;
+    }
+
+    @Override
+    public void draw(Graphics g) {
+        g.setColor(Color.black);
+        g.fill3DRect(900, 10, 300, 700, false);
+
+        int i=0;
+
+        for(Frame frame: frames){
+            frame.draw(g, i);
+            i++;
+        }
     }
 }
