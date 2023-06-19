@@ -1,5 +1,7 @@
 package simulador_escalonador;
 
+import java.lang.Math;
+
 /*   Essa classe modela o processo
  *   Tem que ter uma função executar, que decrementa o numero de linhas restante
  */
@@ -23,6 +25,9 @@ public class ProcessOS {
     private int queueIndex = 0;
 
     private int executedTime;
+    
+    private Page[] pages;
+    private int amountPages;
 
     public ProcessOS(
         String ID, int commingTime, int priority, int cpuTime, 
@@ -36,6 +41,8 @@ public class ProcessOS {
         this.diskIndex = diskIndex;
         this.IOstart = IOstart;
         this.IOend = IOend;
+        this.pages = null;
+        this.amountPages = 0;
     }
 
     public int getPriority() {
@@ -54,6 +61,31 @@ public class ProcessOS {
         return IOend;
     }
 
+    public Page[] getPages(int frameSize) {
+        if(this.pages == null) {
+            this.createPages(frameSize);
+        }
+        return this.pages;
+    }
+
+    private void createPages(int frameSize) {
+        int amountNeeded = this.getAmountPages(frameSize);
+        this.pages = new Page[amountNeeded];
+        for(int i = 0; i < amountNeeded; i++) {
+            this.pages[i] = new Page(this);
+        }
+    }
+
+    public int getAmountPages(int frameSize) {
+        if(this.amountPages == 0)
+            this.setAmountPages(frameSize);
+        return this.amountPages;
+    }
+
+    private void setAmountPages(int frameSize) {
+        this.amountPages = (int) Math.ceil( (double) this.byteLength/frameSize);
+    }
+
     public void free(){
         state = ProcessOS.READY;
     }
@@ -70,8 +102,10 @@ public class ProcessOS {
 
         executedTime++;
 
-        if(cpuTime-executedTime <= 0)
+        if(cpuTime-executedTime <= 0) {
             state = ProcessOS.END;
+            this.freeMemory();
+        }
         else if(commingTime+executedTime == IOstart)
             state = ProcessOS.BLOCK;
 
@@ -80,5 +114,12 @@ public class ProcessOS {
 
     public void print(){
         System.out.println(ID);
+    }
+
+    private void freeMemory() {
+        for(int i = 0; i < this.amountPages; i++) {
+            this.pages[i].clean();
+            this.pages[i] = null;
+        }
     }
 }
