@@ -1,10 +1,14 @@
 package simulador_escalonador;
 
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.desktop.QuitEvent;
+
 /*   Essa classe modela o processo
  *   Tem que ter uma função executar, que decrementa o numero de linhas restante
  */
 
-public class ProcessOS {
+public class ProcessOS implements Drawnable{
     public static final int END = 0;
     public static final int READY = 1;
     public static final int BLOCK = 2;
@@ -22,7 +26,7 @@ public class ProcessOS {
 
     private int queueIndex = 0;
 
-    private int executedTime;
+    private int executedTime = 0;
 
     public ProcessOS(
         String ID, int commingTime, int priority, int cpuTime, 
@@ -47,11 +51,18 @@ public class ProcessOS {
     }
 
     public int getQueueIndex() {
-        return queueIndex;
+        int aux = queueIndex;
+        queueIndex++;
+        queueIndex %= 3;
+        return aux;
     }
 
     public int getIOend() {
         return IOend;
+    }
+
+    public int getExecutedTime() {
+        return executedTime;
     }
 
     public void free(){
@@ -72,8 +83,10 @@ public class ProcessOS {
 
         if(cpuTime-executedTime <= 0)
             state = ProcessOS.END;
-        else if(commingTime+executedTime == IOstart)
+        else if(commingTime+executedTime == IOstart){
             state = ProcessOS.BLOCK;
+            executedTime++;
+        }
 
         return state;
     }
@@ -81,4 +94,21 @@ public class ProcessOS {
     public void print(){
         System.out.println(ID);
     }
+
+    @Override
+    public void draw(Graphics g) {
+
+    }
+
+    public void draw(Graphics g, int x, int y) {
+        int radius = 25;
+
+        g.setColor(Color.blue);
+        g.fillOval(x, y, 2*radius, 2*radius);
+        
+        g.setColor(Color.black);
+        g.drawString(ID, x+radius, y+radius);
+    }
+
+
 }

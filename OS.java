@@ -1,5 +1,7 @@
 package simulador_escalonador;
 
+import java.awt.Graphics;
+
 /*   Essa classe guarda a fila, os escalonadores e a CPU
  *   A ela pertence o loop, e ela vai chamar as funções dos outros módulos
  *   
@@ -8,7 +10,7 @@ package simulador_escalonador;
  *   
  */
 
-public class OS {
+public class OS implements Drawnable{
     LTScheduler ltScheduler;
     Dispatcher dispatcher;
     ProcessListGroup queues;
@@ -46,6 +48,11 @@ public class OS {
 
         cpu.runProcess();
 
+        accessD0.getProcess();
+        accessD1.getProcess();
+        accessD2.getProcess();
+        accessD3.getProcess();
+
         accessD0.access();
         accessD1.access();
         accessD2.access();
@@ -59,6 +66,16 @@ public class OS {
         accessD1.print();
         accessD2.print();
         accessD3.print();
+    }
+
+    @Override
+    public void draw(Graphics g) {
+        cpu.draw(g);
+        queues.draw(g);
+        accessD0.draw(g, 100);
+        accessD1.draw(g, 200);
+        accessD2.draw(g, 300);
+        accessD3.draw(g, 400);
     }
 
 }

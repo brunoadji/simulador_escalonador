@@ -1,5 +1,8 @@
 package simulador_escalonador;
 
+import java.awt.Color;
+import java.awt.Graphics;
+
 /*  CPU vai chamar a executar de um processo,
  *  Checar o fim do processo ou instruções de I/O e levar um processo ao bloqueio
  *  Também colocará o processo na devida fila quando este perder CPU
@@ -9,7 +12,7 @@ package simulador_escalonador;
  *   Uma linha a cada unidade de tempo. Esse loop das unidades de tempo vai ser controlado pela classe OS
 */  
 
-public class CPU {
+public class CPU implements Drawnable{
 
     private ProcessOS process = null;
 
@@ -42,8 +45,9 @@ public class CPU {
             process = null;
             return;
         }
-        else if(state == ProcessOS.BLOCK){
+        else if(process.getPriority()==1 && state == ProcessOS.BLOCK){
             queueManager.insertBlock(process, process.getDiskIndex());
+            process = null;
         }else if(remainingQuantum==0){
             reinsert();
         }
@@ -63,5 +67,12 @@ public class CPU {
         System.out.println("CPU print:");
         process.print();
         System.out.println("remaining quantum: ");
+    }
+
+    public void draw(Graphics g){
+        g.setColor(Color.BLACK);
+        g.drawString("CPU", 10, 60*10);
+        if(process != null)
+            process.draw(g,10, 60*10);
     }
 }

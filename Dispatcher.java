@@ -21,11 +21,11 @@ public class Dispatcher {
 
         p = queue.getFromPriorityQueue();
 
-        int i=-1;
+        int i=0;
 
         while(p == null && i<3){
-            i++;
             p = queue.getFromFeedbackQueue(i);
+            i++;
         }
 
         cpu.setProcess(p);
