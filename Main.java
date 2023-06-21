@@ -101,7 +101,7 @@ class Main extends Canvas implements Runnable{
             }catch(Exception e){
                 System.out.println(e);
             }
-            System.out.println("esperando 2 segundos");
+            System.out.println("esperando 4 segundos");
 
             i++;
             clk++;

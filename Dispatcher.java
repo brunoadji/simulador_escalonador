@@ -9,23 +9,18 @@ package simulador_escalonador;
 public class Dispatcher {
 
     private ProcessListGroup queue;
-    private CPU cpu;
     
-    public Dispatcher(ProcessListGroup queue, CPU cpu){
+    public Dispatcher(ProcessListGroup queue, CPU[] cpu){
         this.queue = queue;
-        this.cpu = cpu;
     }
 
-    public void dispatch(){
+    public void dispatch(CPU cpu){
         ProcessOS p;
 
         p = queue.getFromPriorityQueue();
-
-        int i=0;
-
-        while(p == null && i<3){
+        
+        for(int i = 0; i < 3 && p == null; i++) {
             p = queue.getFromFeedbackQueue(i);
-            i++;
         }
 
         cpu.setProcess(p);

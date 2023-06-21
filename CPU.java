@@ -71,10 +71,14 @@ public class CPU implements Drawnable{
         System.out.println("remaining quantum: ");
     }
 
-    public void draw(Graphics g){
+    @Override
+    public void draw(Graphics g) {
+    }
+
+    public void draw(Graphics g, int delta, int i){
         g.setColor(Color.BLACK);
-        g.drawString("CPU", 10, 60*10);
+        g.drawString("CPU " + i, 10+delta, 60*10);
         if(process != null)
-            process.draw(g,10, 60*10);
+            process.draw(g,10 + delta, 60*10);
     }
 }

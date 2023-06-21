@@ -51,9 +51,9 @@ public class MemAccessComp implements Drawnable{
 
     public void draw(Graphics g, int x) {
         g.setColor(Color.BLACK);
-        g.drawString("Disk acess "+diskIndex, 10+x, 60*10);
+        g.drawString("Disk acess "+diskIndex, 250+x, 60*10);
         if(currentProcess != null)
-            currentProcess.draw(g,10+x, 60*10);
+            currentProcess.draw(g,250+x, 60*10);
     }
 
 }

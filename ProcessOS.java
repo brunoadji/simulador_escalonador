@@ -137,6 +137,7 @@ public class ProcessOS implements Drawnable{
             this.pages[i].clean();
             this.pages[i] = null;
         }
+        System.out.println(ID + " Acabou");
     }
 
     @Override

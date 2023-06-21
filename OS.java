@@ -18,14 +18,17 @@ public class OS implements Drawnable{
     MemAccessComp accessD1;
     MemAccessComp accessD2;
     MemAccessComp accessD3;
-    CPU cpu;
+    CPU[] cpu;
 
     Memory memory;
 
     public OS(){
         queues = new ProcessListGroup();
 
-        cpu = new CPU(queues);
+        cpu = new CPU[4];
+        for(int i = 0; i < 4; i++) {
+            cpu[i] = new CPU(queues);
+        }
 
         dispatcher = new Dispatcher(queues, cpu);
 
@@ -51,10 +54,12 @@ public class OS implements Drawnable{
     }
 
     public void executeCicle(){
-        if(cpu.isFree())
-            dispatcher.dispatch();
+        for(int i = 0; i < 4; i++) {
+            if(cpu[i].isFree())
+                dispatcher.dispatch(cpu[i]);
 
-        cpu.runProcess();
+            cpu[i].runProcess();
+        }
 
         accessD0.getProcess();
         accessD1.getProcess();
@@ -68,7 +73,9 @@ public class OS implements Drawnable{
     }
 
     public void print(){
-        cpu.print();
+        for(int i = 0; i < 4; i++) {
+            cpu[i].print();
+        }
         queues.print();
         accessD0.print();
         accessD1.print();
@@ -78,7 +85,9 @@ public class OS implements Drawnable{
 
     @Override
     public void draw(Graphics g) {
-        cpu.draw(g);
+        for(int i = 0; i < 4; i++) {
+            cpu[i].draw(g, i*60, i);
+        }
         queues.draw(g);
         accessD0.draw(g, 100);
         accessD1.draw(g, 200);
